@@ -99,3 +99,99 @@ curl -X POST http://localhost:3000/users/register \
   }
 }
 ```
+
+### Login User
+
+#### Endpoint
+`POST /users/login`
+
+#### Description
+This endpoint logs in an existing user.
+
+#### Request
+- **URL**: `/users/login`
+- **Method**: `POST`
+- **Headers**: 
+  - `Content-Type: application/json`
+- **Body**:
+  ```json
+  {
+    "email": "john.doe@example.com",
+    "password": "password123"
+  }
+  ```
+
+#### Response
+- **Success** (Status Code: `200 OK`):
+  ```json
+  {
+    "token": "jwt-token",
+    "user": {
+      "_id": "user-id",
+      "fullname": {
+        "firstname": "John",
+        "lastname": "Doe"
+      },
+      "email": "john.doe@example.com"
+    }
+  }
+  ```
+- **Error** (Status Code: `400 Bad Request`):
+  ```json
+  {
+    "errors": [
+      {
+        "msg": "Invalid email address",
+        "param": "email",
+        "location": "body"
+      },
+      {
+        "msg": "Password must be at least 5 characters long",
+        "param": "password",
+        "location": "body"
+      }
+    ]
+  }
+  ```
+- **Error** (Status Code: `404 Not Found`):
+  ```json
+  {
+    "message": "User not found"
+  }
+  ```
+- **Error** (Status Code: `401 Unauthorized`):
+  ```json
+  {
+    "message": "Invalid credentials"
+  }
+  ```
+
+#### Validation
+- `email`: Must be a valid email address.
+- `password`: Must be at least 5 characters long.
+
+#### Example
+##### Request
+```bash
+curl -X POST http://localhost:3000/users/login \
+-H "Content-Type: application/json" \
+-d '{
+  "email": "john.doe@example.com",
+  "password": "password123"
+}'
+```
+
+##### Response
+```json
+{
+  "token": "jwt-token",
+  "user": {
+    "_id": "user-id",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com"
+  }
+}
+```

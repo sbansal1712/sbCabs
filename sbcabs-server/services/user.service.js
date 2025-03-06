@@ -21,3 +21,13 @@ module.exports.createUser = async({
 
     return user;
 }
+
+module.exports.getUserByEmail = async(email) => {
+    if (!email) {
+        throw new Error('Email is required');
+    }
+    const user = userModel.findOne({
+        email
+    }).select('+password');
+    return user;
+};
