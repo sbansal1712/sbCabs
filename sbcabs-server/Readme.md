@@ -81,7 +81,7 @@ curl -X POST http://localhost:3000/users/register \
     "lastname": "Doe"
   },
   "email": "john.doe@example.com",
-  "password": "password123"
+    "password": "password123"
 }'
 ```
 
@@ -193,5 +193,99 @@ curl -X POST http://localhost:3000/users/login \
     },
     "email": "john.doe@example.com"
   }
+}
+```
+
+### Get User Profile
+
+#### Endpoint
+`GET /users/profile`
+
+#### Description
+This endpoint retrieves the profile of the authenticated user.
+
+#### Request
+- **URL**: `/users/profile`
+- **Method**: `GET`
+- **Headers**: 
+  - `Authorization`: `Bearer <jwt-token>`
+
+#### Response
+- **Success** (Status Code: `200 OK`):
+  ```json
+  {
+    "_id": "user-id",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com"
+  }
+  ```
+- **Error** (Status Code: `401 Unauthorized`):
+  ```json
+  {
+    "message": "Unauthorized"
+  }
+  ```
+
+#### Example
+##### Request
+```bash
+curl -X GET http://localhost:3000/users/profile \
+-H "Authorization: Bearer jwt-token"
+```
+
+##### Response
+```json
+{
+  "_id": "user-id",
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "john.doe@example.com"
+}
+```
+
+### Logout User
+
+#### Endpoint
+`GET /users/logout`
+
+#### Description
+This endpoint logs out the authenticated user.
+
+#### Request
+- **URL**: `/users/logout`
+- **Method**: `GET`
+- **Headers**: 
+  - `Authorization`: `Bearer <jwt-token>`
+
+#### Response
+- **Success** (Status Code: `200 OK`):
+  ```json
+  {
+    "message": "Logged out successfully"
+  }
+  ```
+- **Error** (Status Code: `401 Unauthorized`):
+  ```json
+  {
+    "message": "Unauthorized"
+  }
+  ```
+
+#### Example
+##### Request
+```bash
+curl -X GET http://localhost:3000/users/logout \
+-H "Authorization: Bearer jwt-token"
+```
+
+##### Response
+```json
+{
+  "message": "Logged out successfully"
 }
 ```
