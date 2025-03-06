@@ -1,6 +1,5 @@
 const userModel = require('../models/user.model');
 
-
 module.exports.createUser = async({
     firstname,
     lastname,
@@ -30,4 +29,19 @@ module.exports.getUserByEmail = async(email) => {
         email
     }).select('+password');
     return user;
-};
+}
+
+module.exports.getUserById = async(id) => {
+    if (!id) {
+        throw new Error('User ID is required');
+    }
+    const user = userModel.findById(id);
+    return user;
+}
+
+module.exports.hashPassword = async(password) => {
+    if (!password) {
+        throw new Error('Password is required');
+    }
+    return await userModel.hashPassword(password);
+}
