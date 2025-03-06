@@ -81,7 +81,7 @@ curl -X POST http://localhost:3000/users/register \
     "lastname": "Doe"
   },
   "email": "john.doe@example.com",
-    "password": "password123"
+  "password": "password123"
 }'
 ```
 
@@ -234,6 +234,77 @@ This endpoint retrieves the profile of the authenticated user.
 ```bash
 curl -X GET http://localhost:3000/users/profile \
 -H "Authorization: Bearer jwt-token"
+```
+
+##### Response
+```json
+{
+  "_id": "user-id",
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "john.doe@example.com"
+}
+```
+
+### Update User Profile
+
+#### Endpoint
+`POST /users/profile`
+
+#### Description
+This endpoint updates the profile of the authenticated user.
+
+#### Request
+- **URL**: `/users/profile`
+- **Method**: `POST`
+- **Headers**: 
+  - `Authorization`: `Bearer <jwt-token>`
+  - `Content-Type: application/json`
+- **Body**:
+  ```json
+  {
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com"
+  }
+  ```
+
+#### Response
+- **Success** (Status Code: `200 OK`):
+  ```json
+  {
+    "_id": "user-id",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com"
+  }
+  ```
+- **Error** (Status Code: `401 Unauthorized`):
+  ```json
+  {
+    "message": "Unauthorized"
+  }
+  ```
+
+#### Example
+##### Request
+```bash
+curl -X POST http://localhost:3000/users/profile \
+-H "Authorization: Bearer jwt-token" \
+-H "Content-Type: application/json" \
+-d '{
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "john.doe@example.com"
+}'
 ```
 
 ##### Response

@@ -58,6 +58,14 @@ module.exports.getUserProfile = async (req, res, next) => {
      res.status(200).json(req.user);
 }
 
+module.exports.updateUserProfile = async (req, res, next) => {
+    const user = req.user;
+
+    const updatedUser = await userService.updateUser(user._id, req.body);
+
+    res.status(200).json(updatedUser);
+}
+
 module.exports.logoutUser = async (req, res, next) => {
     res.clearCookie('token');
     const token = req.cookies.token || req.headers.authorization.split(' ')[1];

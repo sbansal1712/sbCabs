@@ -39,6 +39,25 @@ module.exports.getUserById = async(id) => {
     return user;
 }
 
+module.exports.updateUser = async(id, {
+    fullname: {firstname, lastname},
+    email
+}) => {
+    if (!id) {
+        throw new Error('User ID is required');
+    }
+    const user = await userModel.findByIdAndUpdate(id, {
+        fullname: {
+            firstname,
+            lastname
+        },
+        email
+    }, {
+        new: true,
+    })
+    return user;
+}
+
 module.exports.hashPassword = async(password) => {
     if (!password) {
         throw new Error('Password is required');
